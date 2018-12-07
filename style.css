@@ -1,0 +1,99 @@
+body
+{
+	background: #262626;
+}
+#loader-page ul
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+#loader-page ul li
+{
+	list-style: none;
+	width: 40px;
+	height: 40px;
+	background: #fff;
+	border-radius: 50%;
+	animation: animate 1.6s ease-in-out infinite;
+}
+@keyframes animate
+{
+	0%, 40%, 100%
+	{
+		transform: scale(0.2);
+	}
+	20%
+	{
+		transform: scale(1);
+	}
+}
+#loader-page ul li:nth-child(1)
+{
+	animation-delay: -1.4s;
+	background: #2d4772;
+	box-shadow: 0 0 50px #2d4772;
+}
+#loader-page ul li:nth-child(2)
+{
+	animation-delay: -1.2s;
+	background: #335287;
+	box-shadow: 0 0 50px #335287;
+}
+#loader-page ul li:nth-child(3)
+{
+	animation-delay: -1s;
+	background: #3b5c91;
+	box-shadow: 0 0 50px #3b5c91;
+}
+#loader-page ul li:nth-child(4)
+{
+	animation-delay: -0.8s;
+	background: #4268a5;
+	box-shadow: 0 0 50px #4268a5;
+}
+#loader-page ul li:nth-child(5)
+{
+	animation-delay: -0.6s;
+	background: #4571bc;
+	box-shadow: 0 0 50px #4571bc;
+}
+#loader-page ul li:nth-child(6)
+{
+	animation-delay: -0.4s;
+	background: #578be0;
+	box-shadow: 0 0 50px #578be0;
+}
+#loader-page ul li:nth-child(7)
+{
+	animation-delay: -0.2s;
+	background: #6099f7;
+	box-shadow: 0 0 50px #6099f7;
+}
+.menu
+{
+	margin-left: 40%;
+	float: center;
+	position: fixed;
+}
+.menu h1
+{
+	text-align: center;
+	margin-top: 70%;
+}
+#playButton, #ruleButton
+{
+	height: 100px;
+	width: 200px;
+	transition: transform .2s;
+}
+#playButton:hover, #ruleButton:hover
+{
+    -ms-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5); 
+}
