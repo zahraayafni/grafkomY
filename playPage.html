@@ -4,12 +4,24 @@
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
+			@font-face
+			{
+				font-family: NeonLights;
+				src: url('font/neon2.ttf'); 
+			}
+			@font-face
+			{
+				font-family: Rustico;
+				src: url('font/Rustico-Regular.otf'); 
+			}
 		</style>
 	</head>
 	<body>
 		<script src="lib/build/three.js"></script>
+		<script src="https://unpkg.com/three.texttexture@18.10.24"></script>
 		<script src="lib/js/loaders/FBXLoader.js"></script>
 		<script src="lib/js/libs/inflate.min.js"></script>
+		<script src="lib/THREE.TextSprite.js"></script>
 		<script>
 			//Scene
 			var scene = new THREE.Scene();
@@ -38,6 +50,20 @@
                 scene.add(object);
             });
 
+            var sprite = new THREE.TextSprite({
+						textSize: 70,
+						material: {
+							color: 0x8cb8ff,
+						},
+						texture: {
+							text: 'Beat.ly',
+							fontFamily: 'Rustico, Helvetica, sans-serif',
+						},
+					});
+					// sprite.position.x = -window.innerWidth/2.5;
+					// sprite.position.y = window.innerHeight/2.5;
+					scene.add(sprite);
+
 			camera.position.z = 1000;
 
 			window.onkeydown = function(event) {
@@ -60,17 +86,14 @@
             			camera.position.x += range;
             			console.log(camera.position.x);
             			break;
-            		default:
-            			console.log(key);
-            			break;
     			}
 			}
 
 			var animate = function () {
 				requestAnimationFrame( animate );
 
-				//camera.position.z -= 3;
-
+				camera.position.z -= 3;
+				sprite.position.set(-window.innerWidth/2.5, window.innerHeight/2.5, 0);
 				renderer.render( scene, camera );
 			};
 
