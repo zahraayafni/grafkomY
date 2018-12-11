@@ -1,6 +1,6 @@
 body
 {
-	background: #fff;
+	background: #000000;
 }
 #loader-page ul
 {
@@ -83,7 +83,9 @@ body
 .menu h1
 {
 	text-align: center;
-	margin-top: 70%;
+	margin-top: 60%;
+	font-family: 'Cinzel', serif;
+	font-size: 64px;
 }
 #playButton, #ruleButton
 {
