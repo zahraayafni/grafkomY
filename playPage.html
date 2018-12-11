@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title>Play Beat.ly</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="lib/build/three.js"></script>
+		<script src="lib/js/loaders/FBXLoader.js"></script>
+		<script src="lib/js/libs/inflate.min.js"></script>
+		<script>
+			//Scene
+			var scene = new THREE.Scene();
+
+			//Camera
+			var camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 3000);
+
+			//Renderer
+			var renderer = new THREE.WebGLRenderer({antialias: true});
+			renderer.setClearColor(0x000000);
+			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			//Lights
+			var light = new THREE.AmbientLight(0x404040);
+			scene.add(light);
+
+			var light2 = new THREE.PointLight(0xffffff, 0.5);
+			scene.add(light2);
+
+			//load piringan
+			var loader = new THREE.FBXLoader();
+			loader.load('obj/bluePlate.fbx', function(object) {
+				object.scale.x = object.scale.y = object.scale.z = 0.5;
+                scene.add(object);
+            });
+
+			camera.position.z = 1000;
+
+			window.onkeydown = function(event) {
+    			var input = event.key;
+    			var range = 20;
+    			switch(input) {
+        			case 'a': 
+            			camera.position.x -= range;
+            			console.log(camera.position.x);
+            			break;
+        			case 's':
+            			camera.position.y -= range;
+            			console.log(camera.position.y);
+            			break;
+        			case 'k':
+            			camera.position.y += range;
+            			console.log(camera.position.y);
+            			break;
+        			case 'l':
+            			camera.position.x += range;
+            			console.log(camera.position.x);
+            			break;
+            		default:
+            			console.log(key);
+            			break;
+    			}
+			}
+
+			var animate = function () {
+				requestAnimationFrame( animate );
+
+				//camera.position.z -= 3;
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+		</script>
+	</body>
+</html>
