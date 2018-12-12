@@ -24,8 +24,8 @@
 		var colors;
 		var renderer;
 		var loader, loader2, loader3, loader4;
-		var lane1, lane2, lane3, lane4;
 		var plate1, plate2, plate3, plate4;
+		var plateArr = [];
 
 		function init()
 		{
@@ -48,43 +48,45 @@
 			document.body.appendChild( renderer.domElement );
 
 			//Grouping plate per lane
-			lane1 = lane2 = lane3 = lane4 = new THREE.Group();
-			var num1 = num2 = num3 = num4 = 10;
+			var size = 0.5, posY = 120, posZ=-900;
 
 			loader = new THREE.FBXLoader();
 			loader.load('obj/bluePlate.fbx', function(obj) {
 				plate1 = obj;
-				plate1.scale.x = plate1.scale.y = plate1.scale.z = 0.3;
+				plate1.scale.x = plate1.scale.y = plate1.scale.z = size;
 				plate1.rotation.x = 0.15 * Math.PI;
-				plate1.position.set(0, 0, -800);
+				plate1.position.set(-200, posY, posZ);
 			});
 
 			loader2 = new THREE.FBXLoader();
 			loader2.load('obj/redPlate.fbx', function(obj) {
 				plate2 = obj;
-				plate2.scale.x = plate2.scale.y = plate2.scale.z = 0.3;
+				plate2.scale.x = plate2.scale.y = plate2.scale.z = size;
 				plate2.rotation.x = 0.15 * Math.PI;
-				plate2.position.set(-20, 0, -800);
+				plate2.position.set(-100, posY, posZ);
 			});
 
 			loader3 = new THREE.FBXLoader();
 			loader3.load('obj/greenPlate.fbx', function(obj) {
 				plate3 = obj;
-				plate3.scale.x = plate3.scale.y = plate3.scale.z = 0.5;
+				plate3.scale.x = plate3.scale.y = plate3.scale.z = size;
 				plate3.rotation.x = 0.15 * Math.PI;
-				plate3.position.set(0, 30, -500);
+				plate3.position.set(0, posY, posZ);
 			});
 
 			loader4 = new THREE.FBXLoader();
 			loader4.load('obj/yellowPlate.fbx', function(obj) {
 				plate4 = obj;
-				plate4.scale.x = plate4.scale.y = plate4.scale.z = 0.5;
+				plate4.scale.x = plate4.scale.y = plate4.scale.z = size;
 				plate4.rotation.x = 0.15 * Math.PI;
-				plate4.position.set(10, 30, -500);
+				plate4.position.set(100, posY, posZ);
 			});
 
+			//Susunan berdasarkan lagu "addPlate(detik keberapa, lane berapa)"
 			addPlate(1, 1);
 			addPlate(4, 2);
+			addPlate(7,3);
+			addPlate(9,4);
 			
 			//Title of the game
             var sprite = new THREE.TextSprite({
@@ -150,7 +152,7 @@
 			animate();
 
 			var animSpeed = .001;
-			var i = 0, distX=1, distY=1, distZ=1;
+			var i = 0, distX=1, distY=3, distZ=3;
 
 			function animate()
 			{
@@ -160,12 +162,9 @@
 				bg.position.y = Math.sin(i/180)*5+5;
 				i += 1;
 
-				//plateAnim(lane1);
-				//plateAnim(lane2);
-
-				// if (object != undefined) {
-				// 	plateAnim(object);
-				// }
+				plateArr.forEach(function(el) {
+					plateAnim(el);
+				});
 				renderer.render( scene, camera );
 			}
 
@@ -186,22 +185,20 @@
 				setTimeout(function(){
 						switch(lane) {
 							case 1:
-								lane1.add(plate1);
-								console.log(plate1);
-								scene.add(lane1);
+								plateArr.push(plate1);
+								scene.add(plate1);
 								break;
 							case 2:
-								lane2.add(plate2);
-								console.log(plate2);
-								scene.add(lane2);
+								plateArr.push(plate2);
+								scene.add(plate2);
 								break;
 							case 3:
-								lane3.add(plate3);
-								scene.add(lane3);
+								plateArr.push(plate3);
+								scene.add(plate3);
 								break;
 							case 4:
-								lane4.add(plate4);
-								scene.add(lane4);
+								plateArr.push(plate4);
+								scene.add(plate4);
 								break;
 						}
 		          					
