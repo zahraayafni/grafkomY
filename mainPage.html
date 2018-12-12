@@ -11,6 +11,13 @@
     	<link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
     	<link rel="stylesheet" type="text/css" href="style.css">
 		<title>Beat.ly Project</title>
+		<style>
+			@font-face
+			{
+				font-family: NeonLights;
+				src: url('font/neon2.ttf'); 
+			}
+		</style>
 	</head>
 	<body onload="myF()">
 		<!-- Create a loading page -->
@@ -115,7 +122,7 @@
 
 		        //text
 		        var sprite = new THREE.TextSprite({
-					textSize: 12,
+					textSize: 8,
 					material: {
 						color: 0x8cb8ff,
 					},
@@ -124,7 +131,7 @@
 						fontFamily: 'NeonLights, Helvetica, sans-serif',
 					},
 				});
-				sprite.position.set(-window.innerWidth/21, window.innerHeight/21, 0);
+				sprite.position.set(-window.innerWidth/20, window.innerHeight/20, 0);
 				scene.add(sprite);
 
     			// Create a shape for background
