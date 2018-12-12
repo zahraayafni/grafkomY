@@ -25,9 +25,11 @@
 		var scene;
 		var colors;
 		var renderer;
+		var loadHeart;
 		var loader, loader2, loader3, loader4;
 		var plate1, plate2, plate3, plate4;
 		var plateArr = [];
+		var objectH;
 
 		function init()
 		{
@@ -51,6 +53,20 @@
 
 			//Grouping plate per lane
 			var size = 0.5, posY = 120, posZ=-900;
+
+			//add Life
+			loadHeart = new THREE.FBXLoader();
+			loadHeart.load('obj/heart.fbx', function(obj) {
+				objectH = obj;
+				objectH.scale.x = objectH.scale.y = objectH.scale.z = 0.3;
+				objectH.position.set(900,450,-700);
+				console.log(objectH);
+                scene.add(objectH);
+			});
+			
+
+
+
 
 			loader = new THREE.FBXLoader();
 			loader.load('obj/bluePlate.fbx', function(obj) {
@@ -219,24 +235,24 @@
 			function addPlate(time, lane)
 			{
 				setTimeout(function(){
-						switch(lane) {
-							case 1:
-								plateArr.push(plate1);
-								scene.add(plate1);
-								break;
-							case 2:
-								plateArr.push(plate2);
-								scene.add(plate2);
-								break;
-							case 3:
-								plateArr.push(plate3);
-								scene.add(plate3);
-								break;
-							case 4:
-								plateArr.push(plate4);
-								scene.add(plate4);
-								break;
-						}
+					switch(lane) {
+						case 1:
+							plateArr.push(plate1);
+							scene.add(plate1);
+							break;
+						case 2:
+							plateArr.push(plate2);
+							scene.add(plate2);
+							break;
+						case 3:
+							plateArr.push(plate3);
+							scene.add(plate3);
+							break;
+						case 4:
+							plateArr.push(plate4);
+							scene.add(plate4);
+							break;
+					}
 		          					
     			}, time*1000);
 			}
