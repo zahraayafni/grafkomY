@@ -17,19 +17,26 @@
 	<script src="lib/js/loaders/FBXLoader.js"></script>
 	<script src="lib/js/libs/inflate.min.js"></script>
 	<script src="lib/THREE.TextSprite.js"></script>
+	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 	<script>
 		var camera;
 		var scene;
+		var colors;
 		var renderer;
 		var object;
 
 		function init()
 		{
+			//Colors
+			colors = ['#15959F', '#F1E4B3', '#F4A090', '#F26144'];
+
 			//Scene
 			scene = new THREE.Scene();
 
 			//Camera
-			camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 3000);
+			camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 1000);
+			camera.position.set(0, 0, 50);
+			camera.lookAt(scene.position);
 
 			//Renderer
 			renderer = new THREE.WebGLRenderer({antialias: true});
@@ -41,13 +48,14 @@
 			var loader = new THREE.FBXLoader();
 			loader.load('obj/bluePlate.fbx', function(obj) {
 				object = obj;
-				object.scale.x = object.scale.y = object.scale.z = 0.3;
-				object.position.set(0,0,-800);
+				object.scale.x = object.scale.y = object.scale.z = 0.5;
+				object.position.set(0, 30, -500);
+				object.rotation.x = 0.15 * Math.PI;
                 scene.add(object);
             });
 
             var sprite = new THREE.TextSprite({
-				textSize: 12,
+				textSize: 8,
 				material: {
 					color: 0x8cb8ff,
 				},
@@ -56,14 +64,41 @@
 					fontFamily: 'NeonLights, Helvetica, sans-serif',
 				},
 			});
-			//sprite.position.set(-window.innerWidth/2.5, window.innerHeight/2.5, 0);
-			sprite.position.set(-window.innerWidth/12, window.innerHeight/12, 0);
-			console.log(sprite.position);
+			sprite.position.set(-window.innerWidth/20, window.innerHeight/20, 0);
 			scene.add(sprite);
 
-			//SET CAMERA POSITION
-			camera.position.set(0, 0, 200);
-			camera.lookAt(scene.position);
+			// Create a shape for background
+			//var bgArr = [];
+			var bg = new THREE.Group();
+			var geometry = new THREE.DodecahedronBufferGeometry(1,0);
+			var shapeCount = 500;
+			
+			for (var i = 0; i < shapeCount; i++) {
+			  colorIndex = Math.round(Math.random() * colors.length - 1);
+			  material = new THREE.MeshLambertMaterial({ color: colors[colorIndex] });
+			  var shape = new THREE.Mesh(geometry, material);
+			  var px = Math.random() * 100 - 50,
+			      py = Math.random() * 100 - 50,
+			      pz = Math.random() * 100 - 50;
+			  var rx = Math.random() * Math.PI * 2,
+			      ry = Math.random() * Math.PI * 2,
+			      rz = Math.random() * Math.PI * 2;
+			  var scale = Math.random() * .5;
+			  shape.position.set(px,py,pz);
+			  shape.rotation.set(rx,ry,rz);
+			  shape.scale.set(scale,scale,scale);
+			  
+			  //bgArr.push(shape);
+			  bg.add(shape);
+			}
+			scene.add(bg);
+
+			//Add Controls
+			var controls = new THREE.OrbitControls(camera, renderer.domElement);
+			controls.minDistance = 50;
+			controls.maxDistance = 200;
+			controls.enableZoom = false;
+			controls.enableRotate = false;
 
 			//LIGHTING
 			var ambientLight = new THREE.AmbientLight(0x111111);
@@ -79,16 +114,36 @@
 
         	scene.add(pointLight);
 
-			render();
-		}
+			animate();
 
-		function render()
-		{
-			requestAnimationFrame( render );
-			if (object != undefined) {
-				object.position.z += 1;
+			var animSpeed = .001;
+			var i = 0, distX=1, distY=1, distZ=1;
+
+			function animate()
+			{
+				requestAnimationFrame( animate );
+
+				bg.position.x = Math.sin(i/180)*10;
+				bg.position.y = Math.sin(i/180)*5+5;
+				i += 1;
+
+				if (object != undefined) {
+					plateAnim(object);
+				}
+				renderer.render( scene, camera );
 			}
-			renderer.render( scene, camera );
+
+			function plateAnim(plate)
+			{
+				plate.position.x += distX;
+				plate.position.y -= distY;
+				plate.position.z += distZ;
+
+				if(plate.position.z > camera.position.z) {
+					scene.remove(plate);
+					plate = undefined;
+				}
+			}
 		}
 
 		function onResize() {
@@ -103,10 +158,10 @@
     		var range = 10;
     		switch(input) {
         		case 'a': 
-            		object.position.x -= range;
+            		object.position.z += range;
             		break;
         		case 's':
-            		object.position.y -= range;
+            		object.position.z -= range;
             		break;
         		case 'k':
             		object.position.y += range;
