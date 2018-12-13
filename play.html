@@ -3,6 +3,7 @@
 		<title>Play Beat.ly</title>
 		<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
@@ -13,7 +14,12 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body onload="funcOnload()">
+		<div class="menu" style="display: none; color: white;">
+			<img id="homeButton" src="img/homeButton.png"><br>
+		</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="lib/build/three.js"></script>
 	<script src="https://unpkg.com/three.texttexture@18.10.24"></script>
 	<script src="lib/js/loaders/FBXLoader.js"></script>
@@ -25,11 +31,10 @@
 		var scene;
 		var colors;
 		var renderer;
-		var loadHeart;
+		var loadHeart, objectH;
 		var loader, loader2, loader3, loader4;
 		var plate1, plate2, plate3, plate4;
 		var plateArr = [];
-		var objectH;
 
 		function init()
 		{
@@ -60,14 +65,13 @@
 				objectH = obj;
 				objectH.scale.x = objectH.scale.y = objectH.scale.z = 0.3;
 				objectH.position.set(900,450,-700);
-				console.log(objectH);
+				console.log(objectH); 
                 scene.add(objectH);
 			});
-			
 
 
 
-
+			//beat
 			loader = new THREE.FBXLoader();
 			loader.load('obj/bluePlate.fbx', function(obj) {
 				plate1 = obj;
@@ -256,7 +260,6 @@
 		          					
     			}, time*1000);
 			}
-
 		}
 
 		function onResize() {
@@ -264,7 +267,7 @@
         	camera.updateProjectionMatrix();
         	renderer.setSize(window.innerWidth, window.innerHeight);
     	}
-
+   
     	//Listen to keyboard event
     	window.onkeydown = function(event) {
     		var input = event.key;
@@ -285,10 +288,21 @@
     		}
 		}
 
-    	window.onload = init;
+    	// window.onload = init;
+    	
     	// listen to the resize events
     	window.addEventListener('resize', onResize, false);
 		
+		function funcOnload() { 
+    		init();
+    		$('.menu').css('display', 'block'); 
+		}
+
+		var home = document.getElementById('homeButton');
+		home.onclick = function() {
+			window.location.href = 'mainPage.html';
+		}
+
 		</script>
 	</body>
 </html>
