@@ -134,6 +134,7 @@ body
   	color: black;
   	font-family: 'Orbitron', sans-serif;
   	text-align: center;
+  	font-weight: bolder;
 }
 /*.modal-body {
 	padding: 2px 16px;

@@ -1,8 +1,7 @@
 <html>
 	<head>
 		<title>Play Beat.ly</title>
-		<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Fredoka+One|Major+Mono+Display|Cinzel" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<style>
 			body { margin: 0; }
@@ -32,6 +31,7 @@
 		var colors;
 		var renderer;
 		var loadHeart, objectH;
+		// var groupLife = [];
 		var loader, loader2, loader3, loader4;
 		var plate1, plate2, plate3, plate4;
 		var plateArr = [];
@@ -64,9 +64,16 @@
 			loadHeart.load('obj/heart.fbx', function(obj) {
 				objectH = obj;
 				objectH.scale.x = objectH.scale.y = objectH.scale.z = 0.3;
-				objectH.position.set(900,450,-700);
+				objectH.rotation.y = 0.075 * -Math.PI;
+				objectH.rotation.z = 0.03 * -Math.PI;
 				console.log(objectH); 
-                scene.add(objectH);
+                var i, j, instance;
+                for ( i = 800; i < 1201; i += 150 ) {
+				    instance = objectH.clone();
+				    instance.position.set( i, 450, -700 );
+				    // groupLife.push(instance);
+				    scene.add(instance);
+				}
 			});
 
 
@@ -124,6 +131,21 @@
 			sprite.position.set(-window.innerWidth/20, window.innerHeight/20, 0);
 			scene.add(sprite);
 
+
+			//GAME START pop-up
+			var startSprite = new THREE.TextSprite({
+				textSize: 10,
+				material: {
+					color: 0xe5e4e2,
+				},
+				texture: {
+					text: 'START',
+					fontFamily: 'Major Mono Display, monospace',
+					fontWeight: 'bold',
+				},
+			});
+			startSprite.position.set(-window.innerWidth/400, window.innerHeight/300, 0);
+			// scene.add(startSprite);
 
 			//GAME OVER pop-up
 			var gameoverSprite = new THREE.TextSprite({
