@@ -38,6 +38,12 @@
 
 		function init()
 		{
+
+				var listener = new THREE.AudioListener();
+			var audio = new THREE.Audio( listener );
+			var mediaElement = new Audio( 'sugar.mp3' );
+			//mediaElement.loop = true;
+			mediaElement.play();
 			//Colors
 			colors = ['#15959F', '#F1E4B3', '#F4A090', '#F26144'];
 
