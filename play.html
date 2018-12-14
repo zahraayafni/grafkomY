@@ -39,11 +39,11 @@
 		function init()
 		{
 
-				var listener = new THREE.AudioListener();
+			var listener = new THREE.AudioListener();
 			var audio = new THREE.Audio( listener );
 			var mediaElement = new Audio( 'sugar.mp3' );
 			//mediaElement.loop = true;
-			mediaElement.play();
+			// mediaElement.play();
 			//Colors
 			colors = ['#15959F', '#F1E4B3', '#F4A090', '#F26144'];
 
@@ -82,7 +82,31 @@
 				}
 			});
 
+			//GAME START pop-up
+			var startSprite = new THREE.TextSprite({
+				textSize: 10,
+				material: {
+					color: 0xe5e4e2,
+				},
+				texture: {
+					text: 'START',
+					fontFamily: 'Major Mono Display, monospace',
+					fontWeight: 'bold',
+				},
+			});
+			startSprite.position.set(-window.innerWidth/400, window.innerHeight/300, 0);
+			scene.add(startSprite);			
+			gameStart();
 
+			//game start
+			function gameStart()
+			{
+				setTimeout(function(){
+					scene.remove(startSprite);
+					mediaElement.play();
+					beat();	
+    			}, 5000);
+			}
 
 			//beat
 			loader = new THREE.FBXLoader();
@@ -118,11 +142,13 @@
 			});
 
 			//Susunan berdasarkan lagu "addPlate(detik keberapa, lane berapa)"
-			addPlate(1, 1);
-			addPlate(4, 2);
-			addPlate(7,3);
-			addPlate(9,4);
-			
+			function beat() {
+				addPlate(1, 1);
+				addPlate(4, 2);
+				addPlate(7,3);
+				addPlate(9,4);
+			}
+						
 			//Title of the game
             var sprite = new THREE.TextSprite({
 				textSize: 8,
@@ -137,21 +163,6 @@
 			sprite.position.set(-window.innerWidth/20, window.innerHeight/20, 0);
 			scene.add(sprite);
 
-
-			//GAME START pop-up
-			var startSprite = new THREE.TextSprite({
-				textSize: 10,
-				material: {
-					color: 0xe5e4e2,
-				},
-				texture: {
-					text: 'START',
-					fontFamily: 'Major Mono Display, monospace',
-					fontWeight: 'bold',
-				},
-			});
-			startSprite.position.set(-window.innerWidth/400, window.innerHeight/300, 0);
-			// scene.add(startSprite);
 
 			//GAME OVER pop-up
 			var gameoverSprite = new THREE.TextSprite({
