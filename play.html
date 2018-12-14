@@ -62,9 +62,6 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			//Grouping plate per lane
-			var size = 0.5, posY = 120, posZ=-900;
-
 			//add Life
 			loadHeart = new THREE.FBXLoader();
 			loadHeart.load('obj/heart.fbx', function(obj) {
@@ -109,44 +106,38 @@
 			}
 
 			//beat
+			//Grouping plate per lane
+			var size = 0.5, posY = 120, posZ=-900;
+
 			loader = new THREE.FBXLoader();
 			loader.load('obj/bluePlate.fbx', function(obj) {
 				plate1 = obj;
-				plate1.scale.x = plate1.scale.y = plate1.scale.z = size;
-				plate1.rotation.x = 0.15 * Math.PI;
-				plate1.position.set(-200, posY, posZ);
 			});
 
 			loader2 = new THREE.FBXLoader();
 			loader2.load('obj/redPlate.fbx', function(obj) {
 				plate2 = obj;
-				plate2.scale.x = plate2.scale.y = plate2.scale.z = size;
-				plate2.rotation.x = 0.15 * Math.PI;
-				plate2.position.set(-100, posY, posZ);
 			});
 
 			loader3 = new THREE.FBXLoader();
 			loader3.load('obj/greenPlate.fbx', function(obj) {
 				plate3 = obj;
-				plate3.scale.x = plate3.scale.y = plate3.scale.z = size;
-				plate3.rotation.x = 0.15 * Math.PI;
-				plate3.position.set(0, posY, posZ);
 			});
 
 			loader4 = new THREE.FBXLoader();
 			loader4.load('obj/yellowPlate.fbx', function(obj) {
 				plate4 = obj;
-				plate4.scale.x = plate4.scale.y = plate4.scale.z = size;
-				plate4.rotation.x = 0.15 * Math.PI;
-				plate4.position.set(100, posY, posZ);
 			});
 
 			//Susunan berdasarkan lagu "addPlate(detik keberapa, lane berapa)"
 			function beat() {
 				addPlate(1, 1);
 				addPlate(4, 2);
-				addPlate(7,3);
-				addPlate(9,4);
+				addPlate(6, 2);
+				addPlate(7, 3);
+				addPlate(8, 4);
+				addPlate(9, 4);
+				addPlate(10, 1);
 			}
 						
 			//Title of the game
@@ -257,13 +248,13 @@
 				bg.position.y = Math.sin(i/180)*5+5;
 				i += 1;
 
-				plateArr.forEach(function(el) {
-					plateAnim(el);
+				plateArr.forEach(function(el, idx) {
+					plateAnim(el, idx);
 				});
 				renderer.render( scene, camera );
 			}
 
-			function plateAnim(plate)
+			function plateAnim(plate, idx)
 			{
 				plate.position.x += distX;
 				plate.position.y -= distY;
@@ -271,7 +262,7 @@
 
 				if(plate.position.y < -window.innerHeight) {
 					scene.remove(plate);
-					plate = undefined;
+					plateArr.splice(idx,1);
 				}
 			}
 
@@ -279,21 +270,37 @@
 			{
 				setTimeout(function(){
 					switch(lane) {
-						case 1:
-							plateArr.push(plate1);
-							scene.add(plate1);
+						case 1: 
+							var plates1 = plate1.clone();
+							plates1.scale.x = plates1.scale.y = plates1.scale.z = size;
+							plates1.rotation.x = 0.15 * Math.PI;
+							plates1.position.set(-200, posY, posZ);
+							plateArr.push(plates1);
+							scene.add(plates1);
 							break;
 						case 2:
-							plateArr.push(plate2);
-							scene.add(plate2);
+							var plates2 = plate2.clone();						
+							plates2.scale.x = plates2.scale.y = plates2.scale.z = size;
+							plates2.rotation.x = 0.15 * Math.PI;
+							plates2.position.set(-100, posY, posZ);
+							plateArr.push(plates2);
+							scene.add(plates2);
 							break;
-						case 3:
-							plateArr.push(plate3);
-							scene.add(plate3);
+						case 3:							
+							var plates3 = plate3.clone();
+							plates3.scale.x = plates3.scale.y = plates3.scale.z = size;
+							plates3.rotation.x = 0.15 * Math.PI;
+							plates3.position.set(0, posY, posZ);
+							plateArr.push(plates3);
+							scene.add(plates3);
 							break;
 						case 4:
-							plateArr.push(plate4);
-							scene.add(plate4);
+							var plates4 = plate4.clone();
+							plates4.scale.x = plates4.scale.y = plates4.scale.z = size;
+							plates4.rotation.x = 0.15 * Math.PI;
+							plates4.position.set(100, posY, posZ);
+							plateArr.push(plates4);
+							scene.add(plates4);
 							break;
 					}
 		          					
