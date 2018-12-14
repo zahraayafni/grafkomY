@@ -35,6 +35,9 @@
 		var loader, loader2, loader3, loader4;
 		var plate1, plate2, plate3, plate4;
 		var plateArr = [];
+		var loaderTap;
+		var taptap;
+
 
 		function init()
 		{
@@ -139,6 +142,20 @@
 				addPlate(9, 4);
 				addPlate(10, 1);
 			}
+
+			//LoadTaptap
+			loaderTap = new THREE.FBXLoader();
+			loaderTap.load('obj/taptapx1.fbx', function(obj) {
+				taptap = obj;
+				taptap.scale.x = taptap.scale.y = taptap.scale.z = 0.41;
+				taptap.rotation.y = 0.5  * Math.PI;
+				//taptap.rotation.x = 0;
+				taptap.position.set(-30, -350, -460);
+				//taptap.ambientLight=0;
+				console.log(taptap);
+                scene.add(taptap);
+
+			});
 						
 			//Title of the game
             var sprite = new THREE.TextSprite({
