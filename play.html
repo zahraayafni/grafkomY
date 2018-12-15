@@ -46,7 +46,7 @@
 			var audio = new THREE.Audio( listener );
 			var mediaElement = new Audio( 'sugar.mp3' );
 			//mediaElement.loop = true;
-			// mediaElement.play();
+			//mediaElement.play();
 			//Colors
 			colors = ['#15959F', '#F1E4B3', '#F4A090', '#F26144'];
 
@@ -133,6 +133,7 @@
 			});
 
 			//Susunan berdasarkan lagu "addPlate(detik keberapa, lane berapa)"
+//<<<<<<< Updated upstream
 			function beat() {
 				addPlate(1, 1);
 				addPlate(4, 2);
@@ -145,10 +146,11 @@
 
 			//LoadTaptap
 			loaderTap = new THREE.FBXLoader();
-			loaderTap.load('obj/taptapx1.fbx', function(obj) {
+			loaderTap.load('obj/taptapv1.fbx', function(obj) {
 				taptap = obj;
 				taptap.scale.x = taptap.scale.y = taptap.scale.z = 0.41;
 				taptap.rotation.y = 0.5  * Math.PI;
+				taptap.rotation.x = 0.08  * Math.PI;
 				//taptap.rotation.x = 0;
 				taptap.position.set(-50, -350, -460);
 				//taptap.ambientLight=0;
@@ -157,6 +159,16 @@
 
 			});
 						
+//=======
+			addPlate(6, 1);
+			addPlate(6.1 ,2);
+			addPlate(7,3);
+			addPlate(7.1, 2);
+
+			addPlate(20, 3);
+			
+			
+//>>>>>>> Stashed changes
 			//Title of the game
             var sprite = new THREE.TextSprite({
 				textSize: 8,
@@ -291,7 +303,7 @@
 							var plates1 = plate1.clone();
 							plates1.scale.x = plates1.scale.y = plates1.scale.z = size;
 							plates1.rotation.x = 0.15 * Math.PI;
-							plates1.position.set(-200, posY, posZ);
+							plates1.position.set(-350, posY, posZ);
 							plateArr.push(plates1);
 							scene.add(plates1);
 							break;
@@ -299,7 +311,7 @@
 							var plates2 = plate2.clone();						
 							plates2.scale.x = plates2.scale.y = plates2.scale.z = size;
 							plates2.rotation.x = 0.15 * Math.PI;
-							plates2.position.set(-100, posY, posZ);
+							plates2.position.set(-250, posY, posZ);
 							plateArr.push(plates2);
 							scene.add(plates2);
 							break;
@@ -307,7 +319,7 @@
 							var plates3 = plate3.clone();
 							plates3.scale.x = plates3.scale.y = plates3.scale.z = size;
 							plates3.rotation.x = 0.15 * Math.PI;
-							plates3.position.set(0, posY, posZ);
+							plates3.position.set(-150, posY, posZ);
 							plateArr.push(plates3);
 							scene.add(plates3);
 							break;
@@ -315,7 +327,7 @@
 							var plates4 = plate4.clone();
 							plates4.scale.x = plates4.scale.y = plates4.scale.z = size;
 							plates4.rotation.x = 0.15 * Math.PI;
-							plates4.position.set(100, posY, posZ);
+							plates4.position.set(-50, posY, posZ);
 							plateArr.push(plates4);
 							scene.add(plates4);
 							break;
