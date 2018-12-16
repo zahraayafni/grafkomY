@@ -22,6 +22,8 @@
 	<script src="lib/build/three.js"></script>
 	<script src="https://unpkg.com/three.texttexture@18.10.24"></script>
 	<script src="lib/js/loaders/FBXLoader.js"></script>
+	<script src="lib/js/loaders/MTLLoader.js"></script>
+	<script src="lib/js/loaders/OBJLoader.js"></script>
 	<script src="lib/js/libs/inflate.min.js"></script>
 	<script src="lib/THREE.TextSprite.js"></script>
 	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
@@ -105,6 +107,7 @@
 			//Grouping plate per lane
 			var size = 0.5, posY = 120, posZ=-900;
 			var pool1 = [], pool2 = [], pool3 = [], pool4 = []; 
+			var gPool1 = [], gPool2 = [], gPool3 = [], gPool4 = [];
 
 			loader = new THREE.FBXLoader();
 			loader.load('obj/bluePlate.fbx', function(obj) {
@@ -162,6 +165,26 @@
 				}
 			});
 
+			// var mtlLoader = new THREE.MTLLoader();
+			// 	mtlLoader.load( 'obj/blueGlow.mtl', function( materials ) {
+
+			// 	    materials.preload();
+
+			// 	    var objLoader = new THREE.OBJLoader();
+			// 	    objLoader.setMaterials( materials );
+			// 	    objLoader.load( 'obj/blueGlow.obj', function ( obj ) {
+			// 	    	for(var i=0; i<30; i++) {
+			// 	    		obj.rotation.x = 0.15 * Math.PI;
+			// 	    		obj.position.set(-70, posY, posZ);
+			// 	    		obj.scale.set(0.5, 0.5, 0.5);
+			// 	    		gPool1.push(obj.clone());
+			// 	    	}
+			// 	    	scene.add(obj);
+			// 	    	console.log("obj");
+			// 	    	console.log(obj);
+			// 	    });
+
+			// 	});
 			// console.log(pool1);
 			// console.log(pool2);
 			// console.log(pool3);
@@ -366,7 +389,7 @@
 				//taptap.rotation.x = 0;
 				taptap.position.set(-50, -350, -460);
 				//taptap.ambientLight=0;
-				console.log(taptap);
+				//console.log(taptap);
                 scene.add(taptap);
 			});
 						
@@ -477,28 +500,28 @@
 				if(plateArr1) {
 					plateArr1.forEach(function(el, idx) {
 						plateAnim(el, idx, 1);
-						scoring1(el);
+						scoring1(el, idx);
 					});
 				}
 				
 				if(plateArr2) {
 					plateArr2.forEach(function(el, idx) {
 						plateAnim(el, idx, 2);
-						scoring2(el);
+						scoring2(el, idx);
 					});
 				}
 				
 				if(plateArr3) {
 					plateArr3.forEach(function(el, idx) {
 						plateAnim(el, idx, 3);
-						scoring3(el);
+						scoring3(el, idx);
 					});
 				}
 				
 				if(plateArr4) {
 					plateArr4.forEach(function(el, idx) {
 						plateAnim(el, idx, 4);
-						scoring4(el);
+						scoring4(el, idx);
 					});
 				}
 				
@@ -507,48 +530,66 @@
 				renderer.render( scene, camera );
 			}
 
-			function scoring1(plate)
+			var id1=0, id2=0, id3=0, id4=0;
+
+			function scoring1(plate, idx)
 			{
 				//SCORING
 				if(key1 && plate) {
 					if(plate.position.x>=-200) {
-						//console.log("score1");
+						//gPool1[id1].position.set(plate.position.x, plate.position.y, plate.position.z);
+						scene.remove(plate);
+						plateArr1.splice(idx,1);
+
+						//scene.add(gPool1[id1]);
+						//console.log(gPool1[id1]);
+						//id1++;
 						score +=10;
 					}
 				} 
+				key1 = false;
 			}
 
-			function scoring2(plate)
+			function scoring2(plate, idx)
 			{
 				if(key2 && plate) {
 					//console.log("key2 " + plate.position.x + " " + plate.position.y + " " + plate.position.z);
-					if(plate.position.x>=100) {
+					if(plate.position.x>=-100) {
 						//console.log("score2");
+						scene.remove(plate);
+						plateArr2.splice(idx,1);
 						score +=10;
 					}
 				}	
+				key2 = false;
 			}
 
-			function scoring3(plate)
+			function scoring3(plate, idx)
 			{
 				if(key3 && plate) {
 					//console.log("key3 " + plate.position.x + " " + plate.position.y + " " + plate.position.z);
 					if(plate.position.x>=0) {
-						console.log("score3");
+						//console.log("score3");
+						scene.remove(plate);
+						plateArr3.splice(idx,1);
 						score +=10;
 					}
 				}
+				key3 = false;
 			}
 
-			function scoring4(plate)
+			function scoring4(plate, idx)
 			{
 				if(key4&& plate) {
 					//console.log("key4 " + plate.position.x + " " + plate.position.y + " " + plate.position.z);
 					if(plate.position.x>=100) {
-						console.log("score4");
+						//console.log("score4");
+						scene.remove(plate);
+						plateArr4.splice(idx,1);
 						score +=10;
 					}
 				}
+				key4 = false;
 			}
 
 			//MOVING PLATE
