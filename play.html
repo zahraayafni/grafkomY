@@ -353,29 +353,7 @@
 			addPlate(189.5,3);
 			addPlate(190,4);
 
-			popUpScore(191); 
-
-
-
-
-			
-
-
-		
-			// addPlate(16,3);
-			// addPlate(17,4);
-			// //  addPlate(6.1,2);
-			//  addPlate(6.2,3);
-
-			// addPlate(7.8,1);
-			//  // addPlate(7.9,1);
-			//  // addPlate(8.1,2);
-			//  // addPlate(8.2,3);
-			
-			// addPlate(9.8,1);
-			//  // addPlate(9.9,1);
-			 // addPlate(10.1,2);
-			 // addPlate(10.2,3);
+			popUpScore(194); 
 			}
 
 			//LoadTaptap
@@ -532,8 +510,7 @@
 			function scoring1(plate)
 			{
 				//SCORING
-				if(key1) {
-					//console.log("key1 " + plate.position.x + " " + plate.position.y + " " + plate.position.z);
+				if(key1 && plate) {
 					if(plate.position.x>=-200) {
 						//console.log("score1");
 						score +=10;
@@ -543,7 +520,7 @@
 
 			function scoring2(plate)
 			{
-				if(key2) {
+				if(key2 && plate) {
 					//console.log("key2 " + plate.position.x + " " + plate.position.y + " " + plate.position.z);
 					if(plate.position.x>=100) {
 						//console.log("score2");
@@ -554,7 +531,7 @@
 
 			function scoring3(plate)
 			{
-				if(key3) {
+				if(key3 && plate) {
 					//console.log("key3 " + plate.position.x + " " + plate.position.y + " " + plate.position.z);
 					if(plate.position.x>=0) {
 						console.log("score3");
@@ -565,7 +542,7 @@
 
 			function scoring4(plate)
 			{
-				if(key4) {
+				if(key4&& plate) {
 					//console.log("key4 " + plate.position.x + " " + plate.position.y + " " + plate.position.z);
 					if(plate.position.x>=100) {
 						console.log("score4");
@@ -577,30 +554,31 @@
 			//MOVING PLATE
 			function plateAnim(plate, idx, lane)
 			{
-				plate.position.x += distX;
-				plate.position.y -= distY;
-				plate.position.z += distZ;
+				if(plate) {
+					plate.position.x += distX;
+					plate.position.y -= distY;
+					plate.position.z += distZ;
 
-				//if(plate.position.y < -window.innerHeight) {
-				if(plate.position.z > camera.position.z) {
-					//console.log(plate.position);
-					scene.remove(plate);
+					if(plate.position.z > camera.position.z) {
+						//console.log(plate.position);
+						scene.remove(plate);
 
-					switch(lane){
-						case 1:
-							plateArr1.splice(idx,1);
-							break;
-						case 2:
-							plateArr2.splice(idx,1);
-							break;
-						case 3:
-							plateArr3.splice(idx,1);
-							break;
-						case 4:
-							plateArr4.splice(idx,1);
-							break;
+						switch(lane){
+							case 1:
+								plateArr1.splice(idx,1);
+								break;
+							case 2:
+								plateArr2.splice(idx,1);
+								break;
+							case 3:
+								plateArr3.splice(idx,1);
+								break;
+							case 4:
+								plateArr4.splice(idx,1);
+								break;
+						}
+						
 					}
-					
 				}
 			}
 
