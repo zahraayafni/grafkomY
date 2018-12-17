@@ -166,31 +166,6 @@
 				}
 			});
 
-			// var mtlLoader = new THREE.MTLLoader();
-			// 	mtlLoader.load( 'obj/blueGlow.mtl', function( materials ) {
-
-			// 	    materials.preload();
-
-			// 	    var objLoader = new THREE.OBJLoader();
-			// 	    objLoader.setMaterials( materials );
-			// 	    objLoader.load( 'obj/blueGlow.obj', function ( obj ) {
-			// 	    	for(var i=0; i<30; i++) {
-			// 	    		obj.rotation.x = 0.15 * Math.PI;
-			// 	    		obj.position.set(-70, posY, posZ);
-			// 	    		obj.scale.set(0.5, 0.5, 0.5);
-			// 	    		gPool1.push(obj.clone());
-			// 	    	}
-			// 	    	scene.add(obj);
-			// 	    	console.log("obj");
-			// 	    	console.log(obj);
-			// 	    });
-
-			// 	});
-			// console.log(pool1);
-			// console.log(pool2);
-			// console.log(pool3);
-			// console.log(pool4);
-
 			//Susunan berdasarkan lagu "addPlate(detik keberapa, lane berapa)"
 			function beat() {
 			addPlate(6,1);
@@ -413,7 +388,7 @@
 			var gameoverSprite = new THREE.TextSprite({
 				textSize: 10,
 				material: {
-					color: 0xFF0000,
+					color: 0xb6d0f9,
 				},
 				texture: {
 					text: 'GAME OVER',
@@ -423,9 +398,6 @@
 			});
 			gameoverSprite.position.set(-window.innerWidth/400, window.innerHeight/300, 0);
 			//scene.add(gameoverSprite);
-
-			//SCORE pop-up
-			
 
 			//Add Controls
 			var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -439,7 +411,7 @@
         	scene.add(ambientLight);
 
         	// add pointLight for the shadows
-        	var pointLight = new THREE.PointLight(0xffffff,1,0,0.55 * Math.PI);
+        	var pointLight = new THREE.PointLight(0xffffff, 0.8, 0);
         	pointLight.position.set(0, 15, 0);
         	pointLight.castShadow = true;
 
@@ -454,6 +426,7 @@
 			var i = 0, distX=1, distY=3, distZ=3;
 			var plateArr1 = [], plateArr2 = [], plateArr3 = [], plateArr4 = [];
 			var setPopUp = 0;
+			var scoreSprite;
 
 			//game start
 			function gameStart()
@@ -491,11 +464,10 @@
 				scene.add(bg);	
 			}
 
-			var currentFrame, lastFrame;
+			var currentFrame, lastFrame, kmiss = 0;
 
-			function animate(frame)
+			function animate()
 			{
-				currentFrame = frame;
 				requestAnimationFrame( animate );
 
 				bg.position.x = Math.sin(i/180)*10;
@@ -529,25 +501,34 @@
 						scoring4(el, idx);
 					});
 				}
-				
-				if(setPopUp==2 && lastFrame - currentFrame == 120) scene.remove(gameoverSprite);
 
-				if(setPopUp) {
+				if(kmiss==5) {
+					scoreSprite = new THREE.TextSprite({
+							textSize: 10,
+							material: {
+								color: 0xb6d0f9,
+							},
+							texture: {
+								text: 'SCORE: ' + score, 
+								fontFamily: 'Fredoka One, cursive',
+								fontWeight: 'bold',
+							},
+						});
+					scoreSprite.position.set(-window.innerWidth/400, window.innerHeight/30, 0);
+
 					scene.add(gameoverSprite);
-					//popUpScore();
-					setPopUp = 2;
+					scene.add(scoreSprite);
+
+					kmiss = 100;
 				}
 
 				//console.log(score);
 				key1 = key2 = key3 = key4 = false;
 
-				lastFrame = currentFrame;
 				renderer.render( scene, camera );
 			}
 
 			var id1=0, id2=0, id3=0, id4=0;
-
-			var kmiss = 0;
 
 			function scoring1(plate, idx)
 			{
@@ -720,13 +701,13 @@
 							break;
 					}
 		          					
-    			}, time*1000/30);
+    			}, time*1000);
 			}
 
 			function popUpScore(time)
 			{
 				setTimeout(function(){
-					var scoreSprite = new THREE.TextSprite({
+					scoreSprite = new THREE.TextSprite({
 						textSize: 10,
 						material: {
 							color: 0xb6d0f9,
@@ -738,7 +719,7 @@
 						},
 					});
 					scoreSprite.position.set(-window.innerWidth/400, window.innerHeight/30, 0);
-					scene.add(scoreSprite);
+					//scene.add(scoreSprite);
     			}, time*1000);	
 			}
 
