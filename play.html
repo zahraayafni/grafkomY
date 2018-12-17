@@ -453,6 +453,7 @@
 			var animSpeed = .001;
 			var i = 0, distX=1, distY=3, distZ=3;
 			var plateArr1 = [], plateArr2 = [], plateArr3 = [], plateArr4 = [];
+			var setPopUp = 0;
 
 			//game start
 			function gameStart()
@@ -490,8 +491,11 @@
 				scene.add(bg);	
 			}
 
-			function animate()
+			var currentFrame, lastFrame;
+
+			function animate(frame)
 			{
+				currentFrame = frame;
 				requestAnimationFrame( animate );
 
 				bg.position.x = Math.sin(i/180)*10;
@@ -526,8 +530,18 @@
 					});
 				}
 				
+				if(setPopUp==2 && lastFrame - currentFrame == 120) scene.remove(gameoverSprite);
+
+				if(setPopUp) {
+					scene.add(gameoverSprite);
+					//popUpScore();
+					setPopUp = 2;
+				}
+
 				//console.log(score);
 				key1 = key2 = key3 = key4 = false;
+
+				lastFrame = currentFrame;
 				renderer.render( scene, camera );
 			}
 
@@ -561,8 +575,7 @@
 					scene.remove(plate);
 				}
 				if(kmiss >= 5){
-					scene.add(gameoverSprite);
-					popUpScore();
+					setPopUp = 1;
 				} 
 				key1 = false;
 			}
@@ -589,8 +602,7 @@
 					scene.remove(plate);
 				}
 				if(kmiss >= 5){
-					scene.add(gameoverSprite);
-					popUpScore();
+					setPopUp = 1;
 				}	
 				key2 = false;
 			}
@@ -618,8 +630,7 @@
 					scene.remove(plate);
 				}
 				if(kmiss >= 5){
-					scene.add(gameoverSprite);
-					popUpScore();
+					setPopUp = 1;
 				}
 				key3 = false;
 			}
@@ -646,8 +657,7 @@
 					scene.remove(plate);
 				}
 				if(kmiss >= 5){
-					scene.add(gameoverSprite);
-					popUpScore();
+					setPopUp = 1;
 				}
 				key4 = false;
 			}
@@ -710,7 +720,7 @@
 							break;
 					}
 		          					
-    			}, time*1000);
+    			}, time*1000/30);
 			}
 
 			function popUpScore(time)
