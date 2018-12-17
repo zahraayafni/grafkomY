@@ -547,9 +547,11 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						plateArr1.splice(idx,1);
+						scene.remove(plate);
 					}
 				}
-				else if(!key1 && plate.position.x>=-185){
+				else if(!key1 && plate && plate.position.x>=-185){
 					kmiss += 1;
 					scene.remove(instance[kmiss-1]);
 					plateArr1.splice(idx,1);
@@ -574,9 +576,11 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						plateArr2.splice(idx,1);
+						scene.remove(plate);
 					}
 				}
-				else if(!key2 && plate.position.x>=-85){
+				else if(!key2 && plate && plate.position.x>=-85){
 					kmiss += 1;
 					scene.remove(instance[kmiss-1]);
 					plateArr2.splice(idx,1);
@@ -601,9 +605,11 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						plateArr3.splice(idx,1);
+						scene.remove(plate);
 					}
 				}
-				else if(!key3 && plate.position.x>=15){
+				else if(!key3 && plate && plate.position.x>=15){
 					console.log("ini 3");
 					kmiss += 1;
 					scene.remove(instance[kmiss-1]);
@@ -629,9 +635,11 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						plateArr4.splice(idx,1);
+						scene.remove(plate);
 					}
 				}
-				else if(!key4 && plate.position.x>=115){
+				else if(!key4 && plate && plate.position.x>=115){
 					kmiss += 1;
 					scene.remove(instance[kmiss-1]);
 					plateArr4.splice(idx,1);
