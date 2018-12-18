@@ -48,7 +48,7 @@
 			var listener = new THREE.AudioListener();
 			var audio = new THREE.Audio( listener );
 			var mediaElement = new Audio( 'that.mp3' );
-			mediaElement.play();
+			
 			//mediaElement.loop = true;
 			//mediaElement.play();
 			//Colors
@@ -335,7 +335,7 @@
 			{
 				setTimeout(function(){
 					scene.remove(startSprite);
-					
+					mediaElement.play();
 					beat();	
     			}, 5000);
 			}
