@@ -39,6 +39,8 @@
 		var loaderTap;
 		var taptap;
 		var score=0;
+		var f1=false, f2=false, f3=false, f4=false;
+
 
 
 		function init()
@@ -529,7 +531,7 @@
 			}
 
 			var id1=0, id2=0, id3=0, id4=0;
-
+			
 			function scoring1(plate, idx)
 			{
 				//SCORING
@@ -547,19 +549,25 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						f1 = true;
+					}
+				}
+				else if(plate.position.x>=-185){
+					if(!f1){
+						kmiss += 1;
+						scene.remove(instance[kmiss-1]);
+						plateArr1.splice(idx,1);
+						scene.remove(plate);
+					}
+					else{
+						f1 = false;
 						plateArr1.splice(idx,1);
 						scene.remove(plate);
 					}
 				}
-				else if(!key1 && plate && plate.position.x>=-185){
-					kmiss += 1;
-					scene.remove(instance[kmiss-1]);
-					plateArr1.splice(idx,1);
-					scene.remove(plate);
-				}
-				if(kmiss >= 5){
-					setPopUp = 1;
-				} 
+				// if(kmiss >= 5){
+				// 	setPopUp = 1;
+				// } 
 				key1 = false;
 			}
 
@@ -576,19 +584,27 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						f2 = true;
+						// plateArr2.splice(idx,1);
+						// scene.remove(plate);
+					}
+				}
+				else if(plate.position.x>=-85){
+					if(f2){
+						f2 = false;
+						plateArr2.splice(idx,1);
+						scene.remove(plate);
+					}
+					else{
+						kmiss += 1;
+						scene.remove(instance[kmiss-1]);
 						plateArr2.splice(idx,1);
 						scene.remove(plate);
 					}
 				}
-				else if(!key2 && plate && plate.position.x>=-85){
-					kmiss += 1;
-					scene.remove(instance[kmiss-1]);
-					plateArr2.splice(idx,1);
-					scene.remove(plate);
-				}
-				if(kmiss >= 5){
-					setPopUp = 1;
-				}	
+				// if(kmiss >= 5){
+				// 	setPopUp = 1;
+				// }	
 				key2 = false;
 			}
 
@@ -605,20 +621,28 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						f3 = true;
+						// plateArr3.splice(idx,1);
+						// scene.remove(plate);
+					}
+				}
+				else if(plate.position.x>=15){
+					// console.log("ini 3");
+					if(f3){
+						f3 = false;
+						plateArr3.splice(idx,1);
+						scene.remove(plate);
+					}
+					else{
+						kmiss += 1;
+						scene.remove(instance[kmiss-1]);
 						plateArr3.splice(idx,1);
 						scene.remove(plate);
 					}
 				}
-				else if(!key3 && plate && plate.position.x>=15){
-					console.log("ini 3");
-					kmiss += 1;
-					scene.remove(instance[kmiss-1]);
-					plateArr3.splice(idx,1);
-					scene.remove(plate);
-				}
-				if(kmiss >= 5){
-					setPopUp = 1;
-				}
+				// if(kmiss >= 5){
+				// 	setPopUp = 1;
+				// }
 				key3 = false;
 			}
 
@@ -635,19 +659,27 @@
 					else{
 						kmiss += 1;
 						scene.remove(instance[kmiss-1]);
+						f4 = true;
+						// plateArr4.splice(idx,1);
+						// scene.remove(plate);
+					}
+				}
+				else if(plate.position.x>=115){
+					if(f4){
+						f4 = false;
+						plateArr4.splice(idx,1);
+						scene.remove(plate);
+					}
+					else{
+						kmiss += 1;
+						scene.remove(instance[kmiss-1]);
 						plateArr4.splice(idx,1);
 						scene.remove(plate);
 					}
 				}
-				else if(!key4 && plate && plate.position.x>=115){
-					kmiss += 1;
-					scene.remove(instance[kmiss-1]);
-					plateArr4.splice(idx,1);
-					scene.remove(plate);
-				}
-				if(kmiss >= 5){
-					setPopUp = 1;
-				}
+				// if(kmiss >= 5){
+				// 	setPopUp = 1;
+				// }
 				key4 = false;
 			}
 
